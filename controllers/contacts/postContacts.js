@@ -1,9 +1,9 @@
-const { addContact } = require('../../model/index')
+const { postContacts } = require('../../services/contactsServices')
 
-const postContacts = async (req, res, next) => {
-  const { name, email, phone } = req.body
-  const contacts = await addContact(name, email, phone)
-  res.status(201).json({ contacts })
+const postContactsController = async (req, res, next) => {
+  const { name, email, phone, favorite } = req.body
+  const contact = await postContacts({ name, email, phone, favorite })
+  res.status(201).json({ contact })
 }
 
-module.exports = postContacts
+module.exports = postContactsController
