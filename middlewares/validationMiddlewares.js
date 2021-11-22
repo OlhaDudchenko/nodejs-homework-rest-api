@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { ValidationError } = require('../helpers/errors')
 
 module.exports = {
   addContactValidation: (req, res, next) => {
@@ -9,12 +10,13 @@ module.exports = {
         .max(30)
         .required(),
       email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'mail', 'ru'] } }),
       phone: Joi.string().required(),
+      favorite: Joi.boolean(),
     })
     const validationResult = schema.validate(req.body)
     if (validationResult.error) {
-      return res.status(400).json({ status: validationResult.error.details })
+      next(new ValidationError(validationResult.error.details[0].message))
     }
     next()
   },
@@ -27,12 +29,13 @@ module.exports = {
         .max(30)
         .optional(),
       email: Joi.string()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'mail', 'ru'] } }),
       phone: Joi.string().optional(),
+      favorite: Joi.boolean(),
     })
     const validationResult = schema.validate(req.body)
     if (validationResult.error) {
-      return res.status(404).json({ status: validationResult.error.details })
+      next(new ValidationError(validationResult.error.details[0].message))
     }
     next()
   }

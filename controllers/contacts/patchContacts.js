@@ -1,8 +1,10 @@
-const { updateContact } = require('../../model/index')
+const { patchContacts } = require('../../services/contacts')
 
-const patchContacts = async (req, res, next) => {
-  const contacts = await updateContact(req.params.contactId, req.body)
-  res.status(200).json({ contacts })
+const patchContactsController = async (req, res, next) => {
+  const id = req.params.contactId
+  const { favorite } = req.body
+  const updateContact = await patchContacts(id, { favorite })
+  res.status(200).json({ updateContact })
 }
 
-module.exports = patchContacts
+module.exports = patchContactsController

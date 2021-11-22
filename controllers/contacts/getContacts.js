@@ -1,8 +1,8 @@
-const { listContacts } = require('../../model/index')
+const { getContacts } = require('../../services/contacts')
 
-const getContacts = async (req, res, next) => {
-  const contacts = await listContacts()
+const getContactsController = async (req, res, next) => {
+  const contacts = await getContacts()
   res.status(200).json({ contacts })
 }
 
-module.exports = getContacts
+module.exports = getContactsController
