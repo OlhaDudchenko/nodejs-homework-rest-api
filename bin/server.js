@@ -4,7 +4,7 @@ const { main } = require('../db/connection')
 
 const startLaunch = async () => {
   try {
-    await main().then(console.log('Database connection successful'))
+    await main()
     app.listen(PORT)
   } catch (error) {
     console.error(`Failed to launch application with error: ${error.message}`)
