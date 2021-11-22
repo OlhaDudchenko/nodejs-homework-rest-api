@@ -1,4 +1,4 @@
-const { patchContacts } = require('../../services/contactsServices')
+const { patchContacts } = require('../../services/contacts')
 
 const patchContactsController = async (req, res, next) => {
   const id = req.params.contactId
