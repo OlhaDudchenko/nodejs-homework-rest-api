@@ -5,7 +5,7 @@ const { main } = require('../db/connection')
 const startLaunch = async () => {
   try {
     await main()
-    app.listen(PORT)
+    app.listen(PORT, () => console.log(`Server running. Use our API on port: ${PORT}`))
   } catch (error) {
     console.error(`Failed to launch application with error: ${error.message}`)
     process.exit(1)
