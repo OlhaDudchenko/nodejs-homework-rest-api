@@ -1,8 +1,8 @@
 const { Contact } = require('../../db/contactModal')
 const { NotFoundError } = require('../../helpers/errors')
 
-const deleteContacts = async(id) => {
-  const searchingId = await Contact.findByIdAndRemove(id)
+const deleteContacts = async(id, owner) => {
+  const searchingId = await Contact.findOneAndRemove({ _id: id, owner })
   if (!searchingId) {
     throw new NotFoundError('Not found')
   }

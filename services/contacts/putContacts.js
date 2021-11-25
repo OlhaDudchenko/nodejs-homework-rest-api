@@ -1,9 +1,8 @@
 const { Contact } = require('../../db/contactModal')
 
-const putContacts = async(id, { name, email, phone }) => {
-  await Contact.findByIdAndUpdate(id, { name, email, phone })
-  const updateContact = await Contact.findById(id)
-  return updateContact
+const putContacts = async(id, { name, email, phone }, owner) => {
+  const contact = await Contact.findOneAndUpdate({ _id: id, owner }, { $set: { name, email, phone } })
+  return contact
 }
 
 module.exports = putContacts
