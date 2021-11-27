@@ -6,13 +6,12 @@ const authMiddleware = async (req, res, next) => {
   try {
     const { authorization } = req.headers
 
-    const [token] = authorization.split(' ')
+    const [tokenType, token] = authorization.split(' ')
     if (!token) {
       next(new NotAuthorizedError('Please, provide a token'))
     }
 
     const decoded = jwt.decode(token, process.env.JWT_SECRET)
-
     if (!decoded) {
       next(new NotAuthorizedError('Invalid token'))
     }
