@@ -20,7 +20,7 @@ const contactSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   }
-})
+}, { versionKey: false, timestamps: true })
 
 contactSchema.plugin(mongoosePaginate)
 
