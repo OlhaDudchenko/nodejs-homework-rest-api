@@ -6,7 +6,7 @@ const patchContacts = async (id, { favorite }, owner) => {
     throw new WrongParametersError('missing field favorite')
   }
   const contact = await Contact.findOneAndUpdate({ _id: id },
-    { $set: { favorite, owner } }
+    { $set: { favorite, owner } }, { new: true }
   )
   return contact
 }

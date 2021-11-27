@@ -6,7 +6,7 @@ const subscriptionUser = async (id, { subscription }, owner) => {
     throw new WrongParametersError('missing field subscription')
   }
   const user = await User.findOneAndUpdate({ _id: id },
-    { $set: { subscription, owner } }
+    { $set: { subscription, owner } }, { new: true }
   )
   return user
 }
