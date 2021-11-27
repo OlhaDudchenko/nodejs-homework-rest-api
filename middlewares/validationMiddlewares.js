@@ -1,4 +1,5 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 const { ValidationError } = require('../helpers/errors')
 
 module.exports = {
@@ -13,6 +14,7 @@ module.exports = {
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'mail', 'ru'] } }),
       phone: Joi.string().required(),
       favorite: Joi.boolean(),
+      owner: Joi.objectId(),
     })
     const validationResult = schema.validate(req.body)
     if (validationResult.error) {
@@ -32,6 +34,7 @@ module.exports = {
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'mail', 'ru'] } }),
       phone: Joi.string().optional(),
       favorite: Joi.boolean(),
+      owner: Joi.objectId(),
     })
     const validationResult = schema.validate(req.body)
     if (validationResult.error) {
