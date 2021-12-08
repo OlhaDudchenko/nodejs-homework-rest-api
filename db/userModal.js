@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const assert = require('assert')
 
 const userSchema = new mongoose.Schema({
   password: {
@@ -14,18 +15,24 @@ const userSchema = new mongoose.Schema({
   subscription: {
     type: String,
     enum: ['starter', 'pro', 'business'],
-    default: 'starter'
+    default: 'starter',
   },
   token: {
     type: String,
     default: null,
   },
+  avatarURL: String,
+
 }, { versionKey: false, timestamps: true })
 
 userSchema.pre('save', async function() {
   if (this.isNew || this.isModified) {
     this.password = await bcrypt.hash(this.password, 10)
   }
+})
+userSchema.pre('findOneAndUpdate', function (next) {
+  this.options.runValidators = true
+  next()
 })
 
 const User = mongoose.model('User', userSchema)
