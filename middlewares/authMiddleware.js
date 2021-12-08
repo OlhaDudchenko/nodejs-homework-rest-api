@@ -10,7 +10,9 @@ const authMiddleware = async(req, res, next) => {
       next(new NotAuthorizedError('Please, provide a token in request authorization header'))
     }
     const [tokenType, token] = await authorization.split(' ')
-
+    if (tokenType !== 'Bearer') {
+      next(new NotAuthorizedError('Invalid token'))
+    }
     if (!token) {
       next(new NotAuthorizedError('Please, provide a token'))
     }
@@ -22,7 +24,7 @@ const authMiddleware = async(req, res, next) => {
 
     const user = await User.findOne({ _id: verify._id })
 
-    if (!user) {
+    if (!user || !user.token) {
       next(new NotAuthorizedError('Not authorized'))
     }
 
