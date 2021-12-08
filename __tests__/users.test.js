@@ -8,18 +8,17 @@ const { User } = require('../db/userModal')
 const files = fs.readdirSync('image')
 const chosenFile = files[Math.floor(Math.random() * files.length)]
 const mongoose = require('mongoose')
-const databaseName = 'test'
 
 beforeAll(async () => {
-  const url = `mongodb+srv://mango-has-access:NHsNHs@cluster0.via3i.mongodb.net/${databaseName}?retryWrites=true&w=majority`
+  const url = process.env.TEST_DB_HOST
   await mongoose.connect(url, { useNewUrlParser: true })
 })
 describe('Test user services', () => {
   const auth = {}
   it('Should save user to database', async () => {
     const res = await request.post('/users/signup').send({
-      email: `Test-${Math.floor(Math.random() * 9999)}.com`,
-      password: '123',
+      email: 'mango@gmail.com',
+      password: 'mango123',
     })
     expect(res.statusCode).toEqual(201)
   })
@@ -55,6 +54,8 @@ async function loginUser (auth) {
   expect(res.body.user.subscription).toEqual(expect.any(String))
   auth.token = res.body.token
 }
-// afterEach(async () => {
-//   await User.deleteMany({}).then(function () { console.log('Data deleted') }).catch(function (error) { console.log(error) })
-// })
+
+afterAll(async () => {
+  await User.deleteMany({}).then(function () { console.log('Data deleted') }).catch(function (error) { console.log(error) })
+  await mongoose.connection.close()
+})

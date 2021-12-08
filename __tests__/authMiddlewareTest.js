@@ -9,7 +9,6 @@ describe('Auth middleware test', () => {
   it('Should call next and add user properties to req object', async () => {
     const user = { _id: '1' }
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
- 
     const mReq = {
       headers: {
         authorization: `Bearer ${token}`
@@ -17,9 +16,7 @@ describe('Auth middleware test', () => {
     }
     const mRes = {}
     const mockNext = jest.fn()
-
     jest.spyOn(User, 'findOne').mockImplementationOnce(() => (user))
-      
     await authMiddleware(mReq, mRes, mockNext)
     expect(mReq.token).toEqual(token)
     expect(mockNext).toHaveBeenCalled()
@@ -32,7 +29,7 @@ describe('Auth middleware test', () => {
     const mRes = {}
     const mockNext = jest.fn()
 
-   await authMiddleware(mReq, mRes, mockNext)
+    await authMiddleware(mReq, mRes, mockNext)
     expect(mockNext).toHaveBeenCalledWith(new NotAuthorizedError('Please, provide a token in request authorization header'))
   })
 
