@@ -1,3 +1,4 @@
+const gravatar = require('gravatar')
 const { User } = require('../../db/userModal')
 const { RegistrationConflictError } = require('../../helpers/errors')
 
@@ -6,7 +7,7 @@ const registrationUser = async ({ email, password }) => {
   if (findUserByEmail) {
     throw new RegistrationConflictError('Email in use')
   }
-  const user = new User({ email, password })
+  const user = new User({ email, password, avatarURL: gravatar.url(email) })
   await user.save()
   const newUser = {
     email: user.email,

@@ -1,7 +1,6 @@
 const { Contact } = require('../../db/contactModal')
 
 const getContacts = async ({ owner }, options, favorite) => {
-  console.log(favorite !== undefined)
   if (favorite !== undefined) {
     const contacts = await Contact.find({ favorite, owner })
     return contacts
