@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const assert = require('assert')
 
 const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
+    minlength: 6
   },
   email: {
     type: String,
