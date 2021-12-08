@@ -16,7 +16,8 @@ const avatar = async (id, image) => {
     await newImage.resize(250, 250)
     await newImage.write(filePath)
     const filter = { _id: id }
-    const update = { avatarURL: `http://localhost:${process.env.PORT}/avatars/${filename}` }
+    const avatarPath = path.join('public', 'avatars', filename)
+    const update = { avatarURL: avatarPath }
     const user = await User.findOneAndUpdate(filter, update, { new: true })
     await unlink(`tmp/${image.originalname}`)
     return user
