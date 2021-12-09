@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required'],
+    minlength: 6
   },
   email: {
     type: String,
@@ -14,18 +15,24 @@ const userSchema = new mongoose.Schema({
   subscription: {
     type: String,
     enum: ['starter', 'pro', 'business'],
-    default: 'starter'
+    default: 'starter',
   },
   token: {
     type: String,
     default: null,
   },
+  avatarURL: String,
+
 }, { versionKey: false, timestamps: true })
 
 userSchema.pre('save', async function() {
   if (this.isNew || this.isModified) {
     this.password = await bcrypt.hash(this.password, 10)
   }
+})
+userSchema.pre('findOneAndUpdate', function (next) {
+  this.options.runValidators = true
+  next()
 })
 
 const User = mongoose.model('User', userSchema)
