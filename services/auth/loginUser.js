@@ -11,6 +11,9 @@ const loginUser = async ({ email, password }) => {
   if (!await bcrypt.compare(password, user.password)) {
     throw new NotAuthorizedError('Password is wrong')
   }
+  if (!user.verify) {
+    throw new NotAuthorizedError('Verification not passed')
+  }
   const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
   await User.findByIdAndUpdate(user._id, { token })
   return {

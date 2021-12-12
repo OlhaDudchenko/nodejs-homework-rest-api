@@ -1,8 +1,4 @@
-const { registrationUser } = require('../../services/auth')
-const { currentUser } = require('../../services/auth')
-const { loginUser } = require('../../services/auth')
-const { logoutUser } = require('../../services/auth')
-const { subscriptionUser } = require('../../services/auth')
+const { registrationUser, currentUser, loginUser, logoutUser, subscriptionUser } = require('../../services/auth')
 
 class AuthController {
   constructor() {
