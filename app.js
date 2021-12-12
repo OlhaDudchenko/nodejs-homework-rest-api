@@ -4,8 +4,8 @@ const cors = require('cors')
 const authRouter = require('./routes/api/users/auth')
 const avatarRouter = require('./routes/api/users/avatar')
 const contactsRouter = require('./routes/api/contacts')
+const verificationRoute = require('./routes/api/users/verification')
 const { errorHandler } = require('./helpers/apiHelpers')
-const path = require('path')
 const app = express()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
@@ -16,7 +16,7 @@ app.use(express.json())
 
 app.use(express.static('public'))
 
-app.use('/users', authRouter, avatarRouter)
+app.use('/users', authRouter, avatarRouter, verificationRoute)
 app.use('/api/contacts', contactsRouter)
 
 app.use(errorHandler)
