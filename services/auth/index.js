@@ -3,10 +3,11 @@ const loginUser = require('./loginUser')
 const logoutUser = require('./logoutUser')
 const currentUser = require('./currentUser')
 const subscriptionUser = require('./subscriptionUser')
+
 module.exports = {
   registrationUser,
   loginUser,
   logoutUser,
   currentUser,
-  subscriptionUser
+  subscriptionUser,
 }

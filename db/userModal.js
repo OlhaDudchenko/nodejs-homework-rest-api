@@ -23,10 +23,20 @@ const userSchema = new mongoose.Schema({
   },
   avatarURL: String,
 
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verifyToken: {
+    type: String,
+    required: [true, 'Verify token is required'],
+  },
+
 }, { versionKey: false, timestamps: true })
 
 userSchema.pre('save', async function() {
   if (this.isNew || this.isModified) {
+ 
     this.password = await bcrypt.hash(this.password, 10)
   }
 })
